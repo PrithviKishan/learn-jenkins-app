@@ -46,10 +46,9 @@ pipeline {
             }
             steps {
                 sh '''
-                    npx playwright install firefox
                     npx serve -s build &
                     sleep 10
-                    npx playwright test --project=firefox
+                    npx playwright test --reporter=html
                 '''
             }
         }
@@ -58,6 +57,7 @@ pipeline {
     post {
         always {
             junit 'test-results/junit.xml'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
