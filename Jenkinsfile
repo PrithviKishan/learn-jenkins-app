@@ -46,9 +46,10 @@ pipeline {
             }
             steps {
                 sh '''
+                    npx playwright install firefox
                     npx serve -s build &
                     sleep 10
-                    npx playwright test
+                    npx playwright test --project=firefox
                 '''
             }
         }
